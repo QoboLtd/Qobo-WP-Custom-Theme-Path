@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Qobo Custom Themes Path
+ * Plugin Name: Qobo Custom Theme Path
  * Plugin URI:  https://github.com/QoboLtd/Qobo-WP-Custom-Theme-Path 
- * Description: Registers the a custom themes path for better theme organization.
+ * Description: Registers the a custom theme path for better theme organization.
  * Version: 1.0.0
  * Author: Andreas Demetriou
  * License: GPL2
