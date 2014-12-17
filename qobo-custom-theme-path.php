@@ -8,15 +8,20 @@
  * License: GPL2
  */
 
-$qoboCustomThemeDirectory = ABSPATH . '../custom-themes';
+// Allow to change this in wp-config.php or elsewhere
+if (!defined('QB_CUSTOM_THEME_PATH')) {
+	define('QB_CUSTOM_THEME_PATH', '../custom-themes');
+}
 
-// Register custom-theme directory for "on the fly"
-register_theme_directory($qoboCustomThemeDirectory);
+$qoboCustomThemePath = ABSPATH . QB_CUSTOM_THEME_PATH;
+
+// Register custom-theme path for "on the fly"
+register_theme_directory($qoboCustomThemePath);
 
 // Check if the option is preserved for later too
-if (get_option('stylesheet_root') <> $qoboCustomThemeDirectory) {
-	update_option('stylesheet_root', $qoboCustomThemeDirectory);
+if (get_option('stylesheet_root') <> $qoboCustomThemePath) {
+	update_option('stylesheet_root', $qoboCustomThemePath);
 }
 
 // No need for variable anymore
-unset($qoboCustomThemeDirectory);
+unset($qoboCustomThemePath);
