@@ -1,0 +1,8 @@
+{
+	"name": "qobo/qobo-wp-custom-theme-path",
+	"description": "WordPress plugin for adding custom theme paths",
+	"type": "wordpress-plugin",
+	"keywords": ["wordpress"],
+	"license": "GPL-2.0"
+
+}
