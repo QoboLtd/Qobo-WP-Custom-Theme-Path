@@ -3,6 +3,9 @@
 	"description": "WordPress plugin for adding custom theme paths",
 	"type": "wordpress-plugin",
 	"keywords": ["wordpress"],
-	"license": "GPL-2.0"
-
+	"license": "GPL-2.0",
+	"require-dev": {
+		"phpunit/phpunit": "*",
+		"wp-coding-standards/wpcs": "dev-master"
+	}
 }
