@@ -28,4 +28,5 @@
 
     <!-- Files and directories to check -->
     <file>./qobo-custom-theme-path.php</file>
+    <file>./src/</file>
 </ruleset>
