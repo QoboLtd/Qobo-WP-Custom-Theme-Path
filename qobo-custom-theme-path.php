@@ -6,22 +6,24 @@
  * Version: 1.0.1
  * Author: Andreas Demetriou
  * License: GPL2
+ *
+ * @package Qobo_Custom_Theme_Path
  */
 
-// Allow to change this in wp-config.php or elsewhere
+// Allow to change this in wp-config.php or elsewhere.
 if ( ! defined( 'QB_CUSTOM_THEME_PATH' ) ) {
 	define( 'QB_CUSTOM_THEME_PATH', '../custom-themes' );
 }
 
-$qoboCustomThemePath = ABSPATH . QB_CUSTOM_THEME_PATH;
+$qobo_custom_theme_path = ABSPATH . QB_CUSTOM_THEME_PATH;
 
-// Register custom-theme path for "on the fly"
-register_theme_directory( $qoboCustomThemePath );
+// Register custom-theme path for "on the fly".
+register_theme_directory( $qobo_custom_theme_path );
 
-// Check if the option is preserved for later too
-if ( get_option( 'stylesheet_root' ) <> $qoboCustomThemePath ) {
-	update_option( 'stylesheet_root', $qoboCustomThemePath );
+// Check if the option is preserved for later too.
+if ( get_option( 'stylesheet_root' ) !== $qobo_custom_theme_path ) {
+	update_option( 'stylesheet_root', $qobo_custom_theme_path );
 }
 
-// No need for variable anymore
-unset( $qoboCustomThemePath );
+// No need for variable anymore.
+unset( $qobo_custom_theme_path );
