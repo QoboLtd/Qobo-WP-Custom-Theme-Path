@@ -10,20 +10,6 @@
  * @package Qobo_Custom_Theme_Path
  */
 
-// Allow to change this in wp-config.php or elsewhere.
-if ( ! defined( 'QB_CUSTOM_THEME_PATH' ) ) {
-	define( 'QB_CUSTOM_THEME_PATH', '../custom-themes' );
-}
+// Require plugin code.
+require 'src' . DIRECTORY_SEPARATOR . 'plugin.php';
 
-$qobo_custom_theme_path = ABSPATH . QB_CUSTOM_THEME_PATH;
-
-// Register custom-theme path for "on the fly".
-register_theme_directory( $qobo_custom_theme_path );
-
-// Check if the option is preserved for later too.
-if ( get_option( 'stylesheet_root' ) !== $qobo_custom_theme_path ) {
-	update_option( 'stylesheet_root', $qobo_custom_theme_path );
-}
-
-// No need for variable anymore.
-unset( $qobo_custom_theme_path );
