@@ -1,0 +1,17 @@
+image: smartapps/bitbucket-pipelines-php-mysql
+
+pipelines:
+  default:
+    - step:
+        script:
+          - service mysql start
+          - mkdir ~/.ssh
+          - echo $MY_SSH_KEY | base64 --decode -i > ~/.ssh/id_rsa
+          - echo > ~/.ssh/known_hosts
+          - ssh-keyscan -t rsa bitbucket.org >> ~/.ssh/known_hosts
+          - ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+          - chmod -R u+rwX,go-rwX ~/.ssh
+          - ./bin/composer install --no-interaction --no-progress --no-suggest
+          - ./bin/install-wp-dev
+          - ./vendor/bin/phpunit
+          - ./vendor/bin/phpcs
