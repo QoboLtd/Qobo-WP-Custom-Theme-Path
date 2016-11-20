@@ -11,7 +11,7 @@ matrix:
         - php: hhvm
 
 install:
-    - ./bin/composer install --no-interaction --no-progress --no-suggest
+    - composer install --no-interaction --no-progress --no-suggest
 
 before_script:
     - ./bin/install-wp-dev
