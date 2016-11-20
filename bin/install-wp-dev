@@ -1,0 +1,98 @@
+#!/bin/bash
+
+# Get command line arguments
+WP_DIR=$1
+DB_HOST=$2
+DB_NAME=$3
+DB_USER=$4
+DB_PASS=$5
+
+# Defaults
+WP_DIR_DEFAULT="/tmp/wordpress-dev"
+DB_HOST_DEFAULT="localhost"
+DB_NAME_DEFAULT="wordpress_test"
+DB_USER_DEFAULT="root"
+DB_PASS_DEFAULT=""
+
+if [ "$WP_DIR" == "-h" ]
+then
+	# Print help and exit
+	echo
+	echo Usage: $0 WP_DIR DB_HOST DB_NAME DB_USER DB_PASS
+	echo
+	echo Parameters:
+	echo
+	echo "    WP_DIR  - directory where to install wordpress development (default: $WP_DIR_DEFAULT)"
+	echo "    DB_HOST - MySQL hostname to use for tests (default: $DB_HOST_DEFAULT)"
+	echo "    DB_NAME - MySQL database to use for tests (default: $DB_NAME_DEFAULT)"
+	echo "    DB_USER - MySQL username to use for tests (default: $DB_USER_DEFAULT)"
+	echo "    DB_PASS - MySQL password to use for tests (default: $DB_PASS_DEFAULT)"
+	echo
+	exit
+fi
+
+#
+# Setup defaults
+#
+if [ -z "$WP_DIR" ]
+then
+	WP_DIR="$WP_DIR_DEFAULT"
+fi
+
+if [ -z "$DB_HOST" ]
+then
+	DB_HOST="$DB_HOST_DEFAULT"
+fi
+
+if [ -z "$DB_NAME" ]
+then
+	DB_NAME="$DB_NAME_DEFAULT"
+fi
+
+if [ -z "$DB_USER" ]
+then
+	DB_USER="$DB_USER_DEFAULT"
+fi
+
+if [ -z "$DB_PASS" ]
+then
+	DB_PASS="$DB_PASS_DEFAULT"
+fi
+
+# Set things up
+if [ -d "$WP_DIR" ]
+then
+	# If WordPress already installed, update to the latest version
+	echo
+	echo "WordPress is already here.  Updating to the latest version"
+	echo
+	cd "$WP_DIR"
+	svn up
+else
+	# If WordPress is not installed, install it
+	echo
+	echo "Creating MySQL database ($DB_NAME)"
+	echo
+	mysql -u "$DB_USER" -h "$DB_HOST" -e "CREATE DATABASE IF NOT EXISTS $DB_NAME"
+
+	echo
+	echo "Checking out WordPress dev into ($WP_DIR)"
+	echo
+	mkdir -p "$WP_DIR"
+	cd "$WP_DIR"
+	svn co http://develop.svn.wordpress.org/trunk/ .
+
+	echo
+	echo "Setting up wp-tests-config-sample.php"
+	echo
+	WP_CONFIG_FILE="$WP_DIR/wp-tests-config.php"
+	cp "$WP_DIR/wp-tests-config-sample.php" "$WP_CONFIG_FILE"
+	sed -i "s/localhost/$DB_HOST/g" "$WP_CONFIG_FILE"
+	sed -i "s/youremptytestdbnamehere/$DB_NAME/g" "$WP_CONFIG_FILE"
+	sed -i "s/yourusernamehere/$DB_USER/g" "$WP_CONFIG_FILE"
+	sed -i "s/yourpasswordhere/$DB_PASS/g" "$WP_CONFIG_FILE"
+fi
+
+echo
+echo All done.
+echo
